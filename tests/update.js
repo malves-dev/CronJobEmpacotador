@@ -7,7 +7,7 @@ let cronTab = new CronJobManager();
 exports.test = () => {
   let currDate = new Date();
   cronTab.add('updateTest', currDate, () => {
-    console.log("atualizar Cron ... wooo!")
+    console.log("atualizar Cron!")
   });
     
   // Atualize a guia - string
@@ -22,11 +22,11 @@ exports.test = () => {
   
   // Atualiza a tarefa
   let newFunc = function() {
-    console.log("Agora você pode fazer um duplo wooo... wooo wooo ....");
+    console.log("Agora você pode atualizar a tarefa...");
   }
   
   cronTab.update('updateTest', newFunc);
-  console.assert(`${cronTab}`.search("double wooo"), "Não consigo a tarefa de atualização ao atualizar apenas a tarefa!");
+  console.assert(`${cronTab}`.search("wooo duplo"), "Não consigo a tarefa de atualização ao atualizar apenas a tarefa!");
   
   // Atualize a guia e a tarefa - sabemos que a guia de atualização funciona. Só precisamos ter certeza de que a tarefa será atualizada
   cronTab.update('updateTest', testDate, () => {console.log("A New Task!")});
