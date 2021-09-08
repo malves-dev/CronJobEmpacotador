@@ -1,8 +1,8 @@
 Empacotador CronJob
 ===================
 
-Um empacotador node-cron que gerencia muitos jobs de uma vez. 
-Isso foi construído baseado no [cron] (https://www.npmjs.com/package/cron-job-manager).
+Um empacotador node-cron que gerencia muitos jobs de uma vez, com várias opções de controle. 
+Isso foi construído baseado no projeto [cron] (https://www.npmjs.com/package/cron-job-manager).
 
 Instalação
 =============
@@ -19,10 +19,10 @@ Qualquer assertion que falhe deve gerar um erro não detectado.
 Sinopse
 ============
 ```javascript
-const CronJobEmpacotador = require('cronjob-empacotador');
+const CronJobManager = require('cronjob-empacotador');
   
 // Cria um gerenciador, para um novo trabalho.
-const manager = new CronJobEmpacotador('trabalho_um','0 30 * * * *', () => { 
+const manager = new CronJobManager('trabalho_um','0 30 * * * *', () => { 
   console.log("Realizando o trabalho um...");
 };
 
@@ -41,7 +41,7 @@ manager.stop('trabalho_um');
 manager.exists('trabalho_um') //true
 
 // Atualiza um trabalho
-manger.update('trabalho_um', "0 */2 * * * *", () => {
+manager.update('trabalho_um', "0 */2 * * * *", () => {
   console.log("Agora executando este trabalho a cada dois minutos, usando esta função..."
 });
 
