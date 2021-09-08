@@ -1,4 +1,4 @@
-Empacotador CronJob
+Empacotador CronJob baseado no cron-job-manager
 ===================
 
 Um empacotador node-cron que gerencia muitos jobs de uma vez, com várias opções de controle. 
