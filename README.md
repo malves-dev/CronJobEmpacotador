@@ -1,34 +1,35 @@
-CronJobManager
-==============
+Empacotador CronJob
+===================
 
-A node-cron wrapper that manages many jobs at once. This is built using  [cron](https://www.npmjs.com/package/cron) as the underlying cron lib.
+Um empacotador node-cron que gerencia muitos jobs de uma vez. 
+Isso foi construído baseado no [cron] (https://www.npmjs.com/package/cron-job-manager).
 
-Installation
+Instalação
 =============
 ```bash
 npm install cron-job-manager
 ```
-Testing
+Testando
 ===========
 ```bash
 npm test cron-job-manager
 ```
-Any assertion that fails should throw an uncaught error.
+Qualquer assertion que falhe deve gerar um erro não detectado.
 
-Synopsis
+Sinopse
 ============
 ```javascript
-var CronJobManager = require('cron-job-manager'),
-manager = new CronJobManager( // this creates a new manager and adds the arguments as a new job.
+const CronJobManager = require('cron-job-manager'),
+manager = new CronJobManager( // isso cria um novo gerente e adiciona os argumentos como um novo trabalho.
 'a_key_string_to_call_this_job',
-'0 30 * * * *', // the crontab schedule
-() => { console.log("tick - what should be executed?") },
+'0 30 * * * *', // a programação do crontab
+() => { console.log("tick - o que deve ser executado?") },
 {
-// extra options.. 
-// see https://www.npmjs.com/package/cron for all available
+// opções extras.. 
+// veja https://www.npmjs.com/package/cron para todos disponíveis
   start:true,
   timeZone:"America/Los_Angeles",
-  onComplete: () => {console.log("a_key_string_to_call_this_job has stopped....")}
+  onComplete: () => {console.log("a_key_string_to_call_this_job foi parado....")}
 } 
 );
 manager.add('next_job', '0 40 * * * *', () => { console.log('tick...')});
@@ -37,14 +38,14 @@ manager.stop('a_key_string_to_call_this_job');
 manager.exists('next_job') //true
 manger.update('a_key_string_to_call_this_job', 
   "0 */2 * * * *", 
-  () => {console.log("now running this job every two minutes, using this function..."});
-console.log(`current jobs are: ${manager}`);
+  () => {console.log("Agora executando este trabalho a cada dois minutos, usando esta função..."});
+console.log(`Trabalhos atuais são: ${manager}`);
 ```
-Create a Manager
+Criar um gerenciamento
 ===
-creating a manager object is easy, you can create one with arguments that become a new job, or just create one to add jobs to later:
+Criar um objeto objeto de gerenciamento é fácil, você pode criar um com argumentos que se tornam uma nova tarefa ou apenas criar um para adicionar tarefas posteriormente:
 ```javascript
-var manager1 = new CronJobManager('a key to identify the job', 
+const manager1 = new CronJobManager('uma chave para identificar o trabalho', 
   '30 * * * * *', 
   taskFunction,
   {
@@ -53,83 +54,83 @@ var manager1 = new CronJobManager('a key to identify the job',
     timeZone:"Australia/Sydney"
   }),
 manager2 = new CronJobManager();
-dateToRun = new Date('2020-08-03T17:35:43-0400') // run the job at this time on this date.
-manager3 = new CronJob('a one-timer', dateToRun, () => { console.log('listen carefully.. I will say this only once!') }, options)
+dateToRun = new Date('2020-08-03T17:35:43-0400') // Execute o trabalho neste momento nesta data.
+manager3 = new CronJob('a one-timer', dateToRun, () => { console.log('Escute com atenção.. Direi isso apenas uma vez!') }, options)
 ```
-the final options object is optional, these are options that are past to node-cron and they include the following:
+O objeto de opções finais é opcional, essas são opções passadas para node-cron e incluem o seguinte:
   * start: true/false
-  * onComplete: function - runs when the job is stopped
+  * onComplete: function - é executado quando o trabalho é interrompido
   
 
-Adding jobs
+Adicionando trabalhos
 ===
-jobs are added with arguments similar to the above with the *add* function:
+Trabalhos são adicionados com argumentos semelhantes aos anteriores com a função *add*:
 ```javascript
-manager.add('key','* 30 * * * *', taskFunction)
+manager.add('chave','* 30 * * * *', taskFunction)
 ```
-in this case, with the final options object left out of the arguments, the job will be created with the defaults as per node-cron, this means the job will not start until you tell it to, there will be no completion function and the time zone  will default to whatever you have your node.js process set to use. 
+Neste caso, com o objeto de opções finais deixado de fora dos argumentos, o trabalho será criado com os padrões de node-cron, isso significa que o trabalho não será iniciado até que você diga para ele, não haverá função de conclusão e o fuso horário será o padrão para o que você tiver definido para usar o processo node.js.
 
-If the key you are using already exits in the manager, that key will be overwriten, the original job will stop and this one will  take its place. A warning will be printed to the log when this happens.
+Se a chave que você está usando já existe no gerenciador, essa chave será sobrescrita, o trabalho original será interrompido e este ocupará o seu lugar. Um aviso será impresso no log quando isso acontecer.
 
-In place of a cron expression, you can use a JS Date object.
+No lugar de uma expressão cron, você pode usar um objeto JS Date.
 
-Starting Jobs
+Inicicar trabalhos
 ===
-To start a job you can use the *start* function
+Para iniciar um trabalho, você pode usar a função *start*
 ```javasctipt
-manager.start('key')
+manager.start('chave')
 ```
 
-Stopping Jobs
+Parando Trabalhos
 ===
-Stopping is the same as start with the *stop* function
+Parar é só usar a função *stop*
 ```javascript
-manager.stop('key')
+manager.stop('chave')
 ```
 
-Stopping All Jobs
+Parando todos os trabalhos
 ===
-To just stop all the jobs in the manager use *stopAll*
+Para parar todos os trabalhos no gerenciador, use a função *stopAll*
 ```javascript
 manager.stopAll()
 ```
-Any arguments are ignored.
+Quaisquer argumentos são ignorados.
 
-Updating jobs
+Atualizando trabalhos
 ===
-You may want to change the task, time or both of any job during execution. You can do so using the *update* function
+Você pode querer alterar a tarefa de qualquer trabalho durante a execução. Você pode fazer isso usando o função*update*
 ```javascript
-manager.update('key', '0 15 3,5,9,14,18,20 * * *', () => {// do this instead on this new schedule
-});
-manager.update('key', () => { // do this instead 
-});
-manager.update('key', '0 15 3,5,9,14,18,20 * * *') // do it on this schedule instead.
+manager.update('chave', '0 15 3,5,9,14,18,20 * * *', () => {// Faça isso neste novo cronograma});
+manager.update('chave', () => { // Faça isso ao invés});
+manager.update('chave', '0 15 3,5,9,14,18,20 * * *') // Em vez disso, faça-o nesta programação.
 ```
-the old job on the old schedule will be stopped, changed and started again if it was running when you called *update*. If you are just changing the function, the job will continue to use the current scheudle. If you are just changing the schedule the job will continue to use the current function.
+O trabalho antigo na programação anterior será interrompido, alterado e reiniciado se estava em execução quando você chamou a função *update*. Se você estiver apenas alterando a função, o trabalho continuará a usar o esquema atual. Se você estiver apenas alterando a programação, o trabalho continuará a usar a função atual.
 
-Deleting jobs
+Apagando trabalhos
 ===
-you can delete any currently stopped or running jobs using the *deleteJob* function
+Você pode excluir qualquer trabalho interrompido ou em execução usando a função *deleteJob*
 ```javascript
-manager.deleteJob('key')
+manager.deleteJob('chave')
 ```
-The job will be stopped and then removed from the manager, any attempt to alter *key* after deletion will result in an error message to the log since it no longer exists.
+O trabalho será interrompido e, em seguida, removido do gerenciador, qualquer tentativa de alterar a *chave* após a exclusão resultará em uma mensagem de erro no log, uma vez que ele não existe mais.
 
-Viewing jobs
+Vendo trabalhos
 ===
-if you want to see what jobs you have set up, you can just pass your manager as a string. It will display a formatted list of jobs, and their crontabs, and if they have a function to run.
+Se quiser ver quais tarefas que configurou, basta passar seu gerente como uma string. Ele exibirá uma lista formatada de jobs e seus crontabs, e se eles têm uma função a ser executada.
 ```javascript
-console.log(`I got the current jobs: ${manager}`)
+console.log(`trabalhos atuais: ${manager}`)
 ```
-If you need more details or would like to pass the string somewhere else you can use the *listCrons* function
+Se precisar de mais detalhes ou quiser passar a string para outro lugar, você pode usar a função *listCrons*
 ```javascript
-var jobs = manager.listCrons();
+const jobs = manager.listCrons();
 doSomethingWithJobList(jobs);
 ````
 
-Checking for existing jobs
+Verificando trabalhos existentes
 ===
-To check to see if a job exists with a specific key use the *exists* function
+Para verificar se existe um trabalho com uma chave específica, use a função *exists*
 ```javascript
-if (manager.exists('key')) console.log("key exists");
+if (manager.exists('chave')) { 
+  console.log("Chave existe");
+}
 ```
