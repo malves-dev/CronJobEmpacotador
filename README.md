@@ -7,55 +7,65 @@ Isso foi construído baseado no [cron] (https://www.npmjs.com/package/cron-job-m
 Instalação
 =============
 ```bash
-npm install cron-job-manager
+npm install cronjob-empacotador
 ```
 Testando
 ===========
 ```bash
-npm test cron-job-manager
+npm test cronjob-empacotador
 ```
 Qualquer assertion que falhe deve gerar um erro não detectado.
 
 Sinopse
 ============
 ```javascript
-const CronJobManager = require('cron-job-manager'),
-manager = new CronJobManager( // isso cria um novo gerente e adiciona os argumentos como um novo trabalho.
-'a_key_string_to_call_this_job',
-'0 30 * * * *', // a programação do crontab
-() => { console.log("tick - o que deve ser executado?") },
-{
-// opções extras.. 
-// veja https://www.npmjs.com/package/cron para todos disponíveis
-  start:true,
-  timeZone:"America/Los_Angeles",
-  onComplete: () => {console.log("a_key_string_to_call_this_job foi parado....")}
-} 
-);
-manager.add('next_job', '0 40 * * * *', () => { console.log('tick...')});
-manager.start('next_job');
-manager.stop('a_key_string_to_call_this_job');
-manager.exists('next_job') //true
-manger.update('a_key_string_to_call_this_job', 
-  "0 */2 * * * *", 
-  () => {console.log("Agora executando este trabalho a cada dois minutos, usando esta função..."});
-console.log(`Trabalhos atuais são: ${manager}`);
+const CronJobEmpacotador = require('cronjob-empacotador');
+  
+// Cria um gerenciador, para um novo trabalho.
+const manager = new CronJobEmpacotador('trabalho_um','0 30 * * * *', () => { 
+  console.log("Realizando o trabalho um...");
+};
+
+// Outro Trabalho
+manager.add('trabalho_dois', '0 40 * * * *', () => { 
+  console.log('Realizando o trabalho dois......')
+});
+
+// Inicia o trabalho
+manager.start('trabalho_um');
+
+// Para o trabalho
+manager.stop('trabalho_um');
+
+// Verifica se trabalho existe
+manager.exists('trabalho_um') //true
+
+// Atualiza um trabalho
+manger.update('trabalho_um', "0 */2 * * * *", () => {
+  console.log("Agora executando este trabalho a cada dois minutos, usando esta função..."
+});
+
+console.log(`Os trabalhos atuais são: ${manager}`);
 ```
 Criar um gerenciamento
 ===
 Criar um objeto objeto de gerenciamento é fácil, você pode criar um com argumentos que se tornam uma nova tarefa ou apenas criar um para adicionar tarefas posteriormente:
 ```javascript
-const manager1 = new CronJobManager('uma chave para identificar o trabalho', 
-  '30 * * * * *', 
-  taskFunction,
+const manager1 = new CronJobManager('nome_trabalho', '30 * * * * *', taskFunction,
   {
-    start: true, 
+    start: true,   
     onComplete: taskCompleteFunction, 
     timeZone:"Australia/Sydney"
-  }),
-manager2 = new CronJobManager();
-dateToRun = new Date('2020-08-03T17:35:43-0400') // Execute o trabalho neste momento nesta data.
-manager3 = new CronJob('a one-timer', dateToRun, () => { console.log('Escute com atenção.. Direi isso apenas uma vez!') }, options)
+  });
+  
+const manager2 = new CronJobManager();
+
+// Execute o trabalho neste momento nesta data.
+const dateToRun = new Date('2020-08-03T17:35:43-0400') 
+
+const manager3 = new CronJob('um_temporizador', dateToRun, () => { 
+  console.log('Escute com atenção.. Direi isso apenas uma vez!') 
+}, options);
 ```
 O objeto de opções finais é opcional, essas são opções passadas para node-cron e incluem o seguinte:
   * start: true/false
@@ -66,7 +76,7 @@ Adicionando trabalhos
 ===
 Trabalhos são adicionados com argumentos semelhantes aos anteriores com a função *add*:
 ```javascript
-manager.add('chave','* 30 * * * *', taskFunction)
+manager.add('nome_trabalho','* 30 * * * *', taskFunction)
 ```
 Neste caso, com o objeto de opções finais deixado de fora dos argumentos, o trabalho será criado com os padrões de node-cron, isso significa que o trabalho não será iniciado até que você diga para ele, não haverá função de conclusão e o fuso horário será o padrão para o que você tiver definido para usar o processo node.js.
 
@@ -78,14 +88,14 @@ Inicicar trabalhos
 ===
 Para iniciar um trabalho, você pode usar a função *start*
 ```javasctipt
-manager.start('chave')
+manager.start('nome_trabalho')
 ```
 
 Parando Trabalhos
 ===
 Parar é só usar a função *stop*
 ```javascript
-manager.stop('chave')
+manager.stop('nome_trabalho')
 ```
 
 Parando todos os trabalhos
@@ -100,9 +110,9 @@ Atualizando trabalhos
 ===
 Você pode querer alterar a tarefa de qualquer trabalho durante a execução. Você pode fazer isso usando o função*update*
 ```javascript
-manager.update('chave', '0 15 3,5,9,14,18,20 * * *', () => {// Faça isso neste novo cronograma});
-manager.update('chave', () => { // Faça isso ao invés});
-manager.update('chave', '0 15 3,5,9,14,18,20 * * *') // Em vez disso, faça-o nesta programação.
+manager.update('nome_trabalho', '0 15 3,5,9,14,18,20 * * *', () => {// Faça isso neste novo cronograma});
+manager.update('nome_trabalho', () => { // Faça isso ao invés});
+manager.update('nome_trabalho', '0 15 3,5,9,14,18,20 * * *') // Em vez disso, faça-o nesta programação.
 ```
 O trabalho antigo na programação anterior será interrompido, alterado e reiniciado se estava em execução quando você chamou a função *update*. Se você estiver apenas alterando a função, o trabalho continuará a usar o esquema atual. Se você estiver apenas alterando a programação, o trabalho continuará a usar a função atual.
 
@@ -110,7 +120,7 @@ Apagando trabalhos
 ===
 Você pode excluir qualquer trabalho interrompido ou em execução usando a função *deleteJob*
 ```javascript
-manager.deleteJob('chave')
+manager.deleteJob('nome_trabalho')
 ```
 O trabalho será interrompido e, em seguida, removido do gerenciador, qualquer tentativa de alterar a *chave* após a exclusão resultará em uma mensagem de erro no log, uma vez que ele não existe mais.
 
@@ -130,7 +140,7 @@ Verificando trabalhos existentes
 ===
 Para verificar se existe um trabalho com uma chave específica, use a função *exists*
 ```javascript
-if (manager.exists('chave')) { 
-  console.log("Chave existe");
+if (manager.exists('nome_trabalho')) { 
+  console.log("nome_trabalho existe");
 }
 ```
