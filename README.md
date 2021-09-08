@@ -1,7 +1,7 @@
 Empacotador CronJob baseado no cron-job-manager
 ===================
 
-Um empacotador node-cron que gerencia muitos jobs de uma vez, com várias opções de controle. 
+Um empacotador cronjob que gerencia muitos jobs de uma vez, com várias opções de controle. 
 Isso foi construído baseado no projeto [cron] (https://www.npmjs.com/package/cron-job-manager).
 
 Instalação
