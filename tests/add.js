@@ -1,23 +1,23 @@
 const CronJobManager = require('..');
 exports.test = () => {
     try {
-        var jobmanager = new CronJobManager();
+        const jobmanager = new CronJobManager();
         
-        var date = new Date();
+        let date = new Date();
         date.setSeconds(date.getSeconds() + 1);
         
-        console.log('will log wow at:', date);
+        console.log('Vai logar em:', date);
         
         jobmanager.add('jobid', date, () => {
-          console.log('wow');
+          console.log('Adcionou jobit');
         })
         
         jobmanager.start('jobid');
-        jobmanager.add('newJob', date, () => {console.log("added a second job...")})
+        jobmanager.add('newJob', date, () => {console.log("Adicionou um segundo trabalho...")})
         
-        console.assert(jobmanager.exists('newJob') && jobmanager.exists('jobid'), `An added job is missing: ${jobmanager}`)
+        console.assert(jobmanager.exists('newJob') && jobmanager.exists('jobid'), `Um trabalho adicionado está faltando: ${jobmanager}`)
     } catch (e) {
-        console.assert(false, `Well... the add test failed...${e}`);
+        console.assert(false, `O teste de adição falhou...${e}`);
         console.error(e);
     }
 }
