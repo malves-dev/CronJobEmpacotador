@@ -7,19 +7,19 @@ Isso foi construído baseado no projeto [cron] (https://www.npmjs.com/package/cr
 Instalação
 =============
 ```bash
-npm install cronjob-empacotador
+$ npm install empacotador-cronjob
 ```
 Testando
 ===========
 ```bash
-npm test cronjob-empacotador
+$ npm test empacotador-cronjob
 ```
 Qualquer assertion que falhe deve gerar um erro não detectado.
 
 Sinopse
 ============
 ```javascript
-const CronJobManager = require('cronjob-empacotador');
+const CronJobManager = require('empacotador-cronjob');
   
 // Cria um gerenciador, para um novo trabalho.
 const manager = new CronJobManager('trabalho_um','0 30 * * * *', () => { 
@@ -71,7 +71,6 @@ O objeto de opções finais é opcional, essas são opções passadas para node-
   * start: true/false
   * onComplete: function - é executado quando o trabalho é interrompido
   
-
 Adicionando trabalhos
 ===
 Trabalhos são adicionados com argumentos semelhantes aos anteriores com a função *add*:

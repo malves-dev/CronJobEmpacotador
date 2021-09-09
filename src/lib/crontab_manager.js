@@ -61,7 +61,7 @@ CrontabManager.prototype.update = function () {
     updateTab.call(this, arguments[0], arguments[1])
     updateTask.call(this, arguments[0], arguments[2])
   } else {
-    const err = `Número incorreto de argumentos passados, para a atualização... não atualiza... ${arguments[0]}`;
+    const err = `Número incorreto de argumentos passados, para a atualização. ${arguments[0]}`;
     throw new Error(err);
   }
 }
