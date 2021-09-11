@@ -87,7 +87,7 @@ No lugar de uma expressão cron, você pode usar um objeto JS Date.
 Inicicar trabalhos
 ==================
 Para iniciar um trabalho, você pode usar a função *start*
-```javasctipt
+```javascript
 manager.start('nome_trabalho');
 ```
 Parando Trabalhos
@@ -103,6 +103,7 @@ Para parar todos os trabalhos no gerenciador, use a função *stopAll*
 ```javascript
 manager.stopAll();
 ```
+
 Quaisquer argumentos são ignorados.
 
 Atualizando trabalhos
@@ -111,7 +112,7 @@ Você pode querer alterar a tarefa de qualquer trabalho durante a execução. Vo
 ```javascript
 manager.update('nome_trabalho', '0 15 3,5,9,14,18,20 * * *', () => {// Faça isso neste novo cronograma});
 manager.update('nome_trabalho', () => { // Faça isso ao invés});
-manager.update('nome_trabalho', '0 15 3,5,9,14,18,20 * * *') // Em vez disso, faça-o nesta programação.
+manager.update('nome_trabalho', '0 15 3,5,9,14,18,20 * * *'); // Em vez disso, faça-o nesta programação.
 ```
 O trabalho antigo na programação anterior será interrompido, alterado e reiniciado se estava em execução quando você chamou a função *update*. Se você estiver apenas alterando a função, o trabalho continuará a usar o esquema atual. Se você estiver apenas alterando a programação, o trabalho continuará a usar a função atual.
 
@@ -119,7 +120,7 @@ Apagando trabalhos
 ==================
 Você pode excluir qualquer trabalho interrompido ou em execução usando a função *deleteJob*
 ```javascript
-manager.deleteJob('nome_trabalho')
+manager.deleteJob('nome_trabalho');
 ```
 O trabalho será interrompido e, em seguida, removido do gerenciador, qualquer tentativa de alterar a *chave* após a exclusão resultará em uma mensagem de erro no log, uma vez que ele não existe mais.
 
