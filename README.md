@@ -1,5 +1,5 @@
 Empacotador CronJob
-=
+===================
 
 Um empacotador cronjob que gerencia muitos jobs de uma vez, com várias opções de controle. 
 Isso foi construído baseado no projeto [cron-job-manager] (https://www.npmjs.com/package/cron-job-manager).
@@ -56,7 +56,7 @@ const manager1 = new CronJobManager('nome_trabalho', '30 * * * * *', taskFunctio
   {
     start: true,   
     onComplete: taskCompleteFunction, 
-    timeZone:"Australia/Sydney"
+    timeZone:"America/Sao Paulo"
   });
   
 const manager2 = new CronJobManager();
