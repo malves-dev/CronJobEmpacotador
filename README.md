@@ -56,7 +56,7 @@ const manager1 = new CronJobManager('nome_trabalho', '30 * * * * *', taskFunctio
   {
     start: true,   
     onComplete: taskCompleteFunction, 
-    timeZone:"America/Sao Paulo"
+    timeZone:"America/Sao_Paulo"
   });
   
 const manager2 = new CronJobManager();
