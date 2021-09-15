@@ -43,7 +43,7 @@ manager.exists('trabalho_um'); //true
 
 // Atualiza um trabalho
 manager.update('trabalho_um', "0 */2 * * * *", () => {
-  console.log("Agora executando este trabalho a cada dois minutos, usando esta função...");
+  console.log("Agora realizando este trabalho a cada dois minutos, usando esta função...");
 });
 
 console.log(`Os trabalhos atuais são: ${manager}`);
@@ -68,38 +68,38 @@ const manager3 = new CronJob('um_temporizador', dateToRun, () => {
   console.log('Escute com atenção.. Direi isso apenas uma vez!');
 }, options);
 ```
-O objeto de opções finais é opcional, essas são opções passadas para node-cron e incluem o seguinte:
+O objeto de opções finais é opcional, essas são opções passadas para o empacotador-cronjob e incluem o seguinte:
   * start: true/false
   * onComplete: function - é executado quando o trabalho é interrompido
   
 Adicionando trabalhos
 =====================
-Trabalhos são adicionados com argumentos semelhantes aos anteriores com a função *add*
+Trabalhos são adicionados com argumentos semelhantes aos anteriores com a função **add**
 ```javascript
 manager.add('nome_trabalho','* 30 * * * *', taskFunction);
 ```
-Neste caso, com o objeto de opções finais deixado de fora dos argumentos, o trabalho será criado com os padrões de node-cron, isso significa que o trabalho não será iniciado até que você diga para ele, não haverá função de conclusão e o fuso horário será o padrão para o que você tiver definido para usar o processo node.js.
+Neste caso, com o objeto de opções finais deixado de fora dos argumentos, o trabalho será criado com os padrões de empacotador-cronjob, isso significa que o trabalho não será iniciado até que você diga para ele, não haverá função de conclusão e o fuso horário será o padrão para o que você tiver definido para usar o processo node.js.
 
 Se a chave que você está usando já existe no gerenciador, essa chave será sobrescrita, o trabalho original será interrompido e este ocupará o seu lugar. Um aviso será impresso no log quando isso acontecer.
 
-No lugar de uma expressão cron, você pode usar um objeto JS Date.
+No lugar de uma expressão crontab, você pode usar um objeto JS Date.
 
 Inicicar trabalhos
 ==================
-Para iniciar um trabalho, você pode usar a função *start*
+Para iniciar um trabalho, você pode usar a função **start**
 ```javascript
 manager.start('nome_trabalho');
 ```
 Parando Trabalhos
 =================
-Parar é só usar a função *stop*
+Parar é só usar a função **stop**
 ```javascript
 manager.stop('nome_trabalho');
 ```
 
 Parando todos os trabalhos
 ==========================
-Para parar todos os trabalhos no gerenciador, use a função *stopAll*
+Para parar todos os trabalhos no gerenciador, use a função **stopAll**
 ```javascript
 manager.stopAll();
 ```
@@ -108,29 +108,40 @@ Quaisquer argumentos são ignorados.
 
 Atualizando trabalhos
 =====================
-Você pode querer alterar a tarefa de qualquer trabalho durante a execução. Você pode fazer isso usando o função*update*
+Você pode querer alterar a tarefa de qualquer trabalho durante a execução. Você pode fazer isso usando o função **update**
 ```javascript
-manager.update('nome_trabalho', '0 15 3,5,9,14,18,20 * * *', () => {// Faça isso neste novo cronograma});
-manager.update('nome_trabalho', () => { // Faça isso ao invés});
-manager.update('nome_trabalho', '0 15 3,5,9,14,18,20 * * *'); // Em vez disso, faça-o nesta programação.
+manager.update('nome_trabalho', '0 15 3,5,9,14,18,20 * * *', () => { 
+  // Faça isso neste novo cronograma 
+});
+
+manager.update('nome_trabalho', () => { 
+  // Faça isso ao invés
+});
+
+// Em vez disso, faça-o nesta programação.
+manager.update('nome_trabalho', '0 15 3,5,9,14,18,20 * * *'); 
 ```
-O trabalho antigo na programação anterior será interrompido, alterado e reiniciado se estava em execução quando você chamou a função *update*. Se você estiver apenas alterando a função, o trabalho continuará a usar o esquema atual. Se você estiver apenas alterando a programação, o trabalho continuará a usar a função atual.
+O trabalho antigo na programação anterior será interrompido, alterado e reiniciado se estava em execução quando você chamou a função **update**. 
+
+Se você estiver apenas alterando a função, o trabalho continuará a usar o esquema atual. 
+
+Se você estiver apenas alterando a programação, o trabalho continuará a usar a função atual.
 
 Apagando trabalhos
 ==================
-Você pode excluir qualquer trabalho interrompido ou em execução usando a função *deleteJob*
+Você pode excluir qualquer trabalho interrompido ou em execução usando a função **deleteJob**
 ```javascript
 manager.deleteJob('nome_trabalho');
 ```
-O trabalho será interrompido e, em seguida, removido do gerenciador, qualquer tentativa de alterar a *chave* após a exclusão resultará em uma mensagem de erro no log, uma vez que ele não existe mais.
+O trabalho será interrompido e, em seguida, removido do gerenciador, qualquer tentativa de alterar a **chave** após a exclusão resultará em uma mensagem de erro no log, uma vez que ele não existe mais.
 
 Vendo trabalhos
 ===============
-Se quiser ver quais tarefas que configurou, basta passar seu gerente como uma string. Ele exibirá uma lista formatada de jobs e seus crontabs, e se eles têm uma função a ser executada.
+Se quiser ver quais tarefas que configurou, basta passar seu gerenciador como uma string. Ele exibirá uma lista formatada de jobs e seus crontabs, e se eles têm uma função a ser executada.
 ```javascript
 console.log(`trabalhos atuais: ${manager}`);
 ```
-Se precisar de mais detalhes ou quiser passar a string para outro lugar, você pode usar a função *listCrons*
+Se precisar de mais detalhes ou quiser passar a string para outro lugar, você pode usar a função **listCrons**
 ```javascript
 const jobs = manager.listCrons();
 doSomethingWithJobList(jobs);
@@ -138,9 +149,9 @@ doSomethingWithJobList(jobs);
 
 Verificando trabalhos existentes
 ================================
-Para verificar se existe um trabalho com uma chave específica, use a função *exists*
+Para verificar se existe um trabalho com uma chave específica, use a função **exists**
 ```javascript
 if (manager.exists('nome_trabalho')) { 
-  console.log("nome_trabalho existe");
+  console.log('nome_trabalho exist');
 }
 ```
