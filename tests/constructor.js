@@ -14,16 +14,19 @@ exports.test = () => {
     
     // Opções adicionais foram aprovadas e inicia o trabalho
     crontab1 = new CronJobManager('key2', "* * * * * *", 
-                () => {console.log("Construtor de guia de string...")}, 
+                () => {
+                    console.log("Construtor de guia de string...");
+                }, 
                 {
-                start: true, 
-                onComplete: () => {
-                    console.log("Testes completados!")
+                    start: true, 
+                    onComplete: () => {
+                    console.log("Testes completados!");
                 }
      });
     
     console.assert(crontab1 instanceof CronJobManager && crontab1.exists('key2') && /Running/.test(crontab1.listCrons), 
                    "Não foi possível encontrar um trabalho em execução quando {start: true} foi aprovado");
+
     setTimeout(() => {
         crontab1.stop('key2');
     }, 3000);
@@ -33,12 +36,14 @@ exports.test = () => {
     dateForDateTesting.setSeconds(dateForDateTesting.getSeconds() + 1);
     
     crontab2 = new CronJobManager('key3', dateForDateTesting, 
-               () => {console.log("Construtor de data...")}, 
-               {
-                 start: true, 
-                 onComplete: () => {
-                     console.log("Trabalho de construtor de data interrompido...")
-                     }
+                () => {
+                    console.log("Construtor de data...");
+                }, 
+                {
+                    start: true, 
+                    onComplete: () => {
+                        console.log("Trabalho de construtor de data interrompido...");
+                    }
                 }
     );
 }

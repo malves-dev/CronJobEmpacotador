@@ -6,12 +6,12 @@ const CronJobManager = require('../src/lib/crontab_manager');
 exports.test = () => {
     let jobManager = new CronJobManager('newJob', '* * * * * *', 
         () =>  {
-            console.log('Marcação...')
+            console.log('Marcação...');
         }, 
         {
             onComplete: () => {
-                console.log('Iniciar/parar o teste com sucesso')
-            }
+                console.log('Iniciar/parar o teste com sucesso');
+        }
     });
     
     jobManager.start('newJob');

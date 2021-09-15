@@ -13,7 +13,9 @@ exports.test = () => {
         })
         
         manager.start('jobid');
-        manager.add('newJob', date, () => {console.log("Adicionou um segundo trabalho...")})
+        manager.add('newJob', date, () => {
+            console.log("Adicionou um segundo trabalho...");
+        });
         
         console.assert(manager.exists('newJob') && manager.exists('jobid'), `Um trabalho adicionado está faltando: ${manager}`)
     } catch (e) {

@@ -30,7 +30,9 @@ exports.test = () => {
   console.assert(`${cronTab}`.search("wooo duplo"), "Não consigo a tarefa de atualização ao atualizar apenas a tarefa!");
   
   // Atualize a guia e a tarefa - sabemos que a guia de atualização funciona. Só precisamos ter certeza de que a tarefa será atualizada
-  cronTab.update('updateTest', testDate, () => {console.log("Uma nova tarefa!")});
+  cronTab.update('updateTest', testDate, () => {
+    console.log("Uma nova tarefa!");
+  });
   
   console.assert(`${cronTab}`.search("Uma nova tarefa!"), "Não foi possível encontrar a tarefa atualizada ao atualizar a guia e a tarefa!");
   
