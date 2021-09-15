@@ -10,7 +10,7 @@ exports.test = () => {
         }, 
         {
             onComplete: () => {
-                console.log('Iniciar/parar o teste com sucesso');
+            console.log('Iniciar/parar o teste com sucesso');
         }
     });
     

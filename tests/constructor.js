@@ -14,14 +14,14 @@ exports.test = () => {
     
     // Opções adicionais foram aprovadas e inicia o trabalho
     crontab1 = new CronJobManager('key2', "* * * * * *", 
-                () => {
-                    console.log("Construtor de guia de string...");
-                }, 
-                {
-                    start: true, 
-                    onComplete: () => {
-                    console.log("Testes completados!");
-                }
+              () => {
+                  console.log("Construtor de guia de string...");
+              }, 
+              {
+                  start: true, 
+                  onComplete: () => {
+                  console.log("Testes completados!");
+              }
      });
     
     console.assert(crontab1 instanceof CronJobManager && crontab1.exists('key2') && /Running/.test(crontab1.listCrons), 
