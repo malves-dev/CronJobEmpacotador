@@ -30,7 +30,7 @@
  * @param {*} task 
  * @param {*} options 
  */
- function CrontabManager(key, tab, task, options) {
+function CrontabManager (key, tab, task, options) {
    this.jobs = {};
    if (key && tab && task) {
      this.add(key, tab, task, options);
@@ -91,7 +91,7 @@
      this.jobs[job].stop();
      delete this.jobs[job];
    } catch (error) {
-     const msg = `Erro ao tentar apagar o trabalho: '${jbo}'. ${error.message}`;
+     const msg = `Erro ao tentar apagar o trabalho: '${job}'. ${error.message}`;
      console.error(msg);
      throw { message: msg };
    }
@@ -193,11 +193,11 @@
  
  /**
   * 
-  * @param {*} tabKey 
-  * @returns 
+  * @param {*} job 
+  * @returns true/false
   */
- CrontabManager.prototype.exists = function (tabKey) {
-   if (this.jobs[tabKey]) {
+ CrontabManager.prototype.exists = function (job) {
+   if (this.jobs[job]) {
      return true;
    }
    return false;
@@ -205,12 +205,12 @@
  
  /**
   * 
-  * @param {*} tabKey 
+  * @param {*} job 
   * @returns 
   */
- CrontabManager.prototype.fireOnTick = function (tabKey) {
-   if (this.jobs[tabKey]) {
-     return this.jobs[tabKey].fireOnTick()
+ CrontabManager.prototype.fireOnTick = function (job) {
+   if (this.jobs[job]) {
+     return this.jobs[job].fireOnTick()
    }
  }
  
